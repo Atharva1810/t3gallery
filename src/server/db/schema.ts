@@ -4,10 +4,10 @@
 import { sql } from "drizzle-orm";
 import {
   index,
-  integer,
   pgTableCreator,
   timestamp,
   varchar,
+  integer,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -21,7 +21,8 @@ export const createTable = pgTableCreator((name) => `t3gallery_${name}`);
 export const images = createTable(
   "image",
   {
-    id: integer("id").primaryKey(),
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+    userId: varchar("user_id", { length: 256 }).notNull(),
     name: varchar("name", { length: 256 }).notNull(),
     url: varchar("url", { length: 1024 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
